@@ -1,0 +1,39 @@
+const mongoose = require('mongoose');
+const gadgetSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: [true, ' name is required'],
+            trim: true,
+            minlength: [2, 'Name must be at least 2 characters long'],
+            maxlength: [60, 'Name must be at most 60 characters long']
+        },
+
+        category: {
+            type: String,
+            required: [true, 'Category is required'],   
+            trim: true,
+            minlength: [2, 'Category must be at least 2 characters long'],
+            maxlength: [40, 'Category must be at most 40 characters long']
+        },
+        condition: {
+            type: String,
+            required: [true, 'Condition is required'],
+            enum: ['new', 'used', 'Refurbished']
+    },
+    description: {
+        type: String,
+        required: [true, 'Description is required'],
+        trim: true,
+        minlength: [5, 'Description must be at least 5 characters long'], 
+        maxlength: [250, 'Description must be at most 250 characters long']
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }
+},
+    { timestamps: true }
+);  
+module.exports = mongoose.model('Gadget', gadgetSchema);    
+

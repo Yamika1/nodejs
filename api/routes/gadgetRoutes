@@ -1,0 +1,27 @@
+const express = require('express'); 
+
+const router = express.Router(); 
+
+const { 
+
+  getAllGadgets, 
+
+  getGadgetById, 
+
+  createGadget ,
+  updateGadget,
+  deleteGadget
+
+} = require('../controllers/gadgetController'); 
+
+const validateGadgetInput = require('../middleware/validateGadgetInput'); 
+
+router.get('/', getAllGadgets); 
+
+router.get('/:id', getGadgetById); 
+
+router.post('/', validateGadgetInput, createGadget); 
+router.put('/:id', validateGadgetInput, updateGadget);
+router.delete('/:id', deleteGadget);  
+
+module.exports = router; 
