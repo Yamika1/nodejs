@@ -1,6 +1,7 @@
 const express = require('express'); 
 
 const router = express.Router(); 
+const {protect, authorizeRoles} = require('../middleware/authMiddleware');  
 
 const { 
 
@@ -21,7 +22,10 @@ router.get('/', getAllGadgets);
 router.get('/:id', getGadgetById); 
 
 router.post('/', validateGadgetInput, createGadget); 
-router.put('/:id', validateGadgetInput, updateGadget);
-router.delete('/:id', deleteGadget);  
+
+router.put('/:id', protect, validateGadgetInput, updateGadget);
+
+router.delete('/:id', protect, authorizeRoles('admin'), deleteGadget);
+
 
 module.exports = router; 
