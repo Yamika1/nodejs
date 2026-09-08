@@ -4,7 +4,9 @@ const router = express.Router();
 const {register, login, getProfile} = require('../controllers/authController');
 
 const { protect } = require('../middleware/authMiddleware');
-router.post('/register', register);
-router.post('/login', login);
+const { validateRegisterInput, validateLoginInput } = require('../middleware/validateAuthInput');
+const { authLimiter } = require('../middleware/rateLimiters');
+router.post('/register', validateRegisterInput, authLimiter, register);
+router.post('/login', validateLoginInput, authLimiter, login);
 router.get('/me', protect, getProfile);
 module.exports = router;
